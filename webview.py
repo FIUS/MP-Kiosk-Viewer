@@ -5,7 +5,7 @@ from typing import Callable
 import gi
 gi.require_version('Gtk', '3.0')
 gi.require_version('WebKit2', '4.0')
-from gi.repository import Gtk
+from gi.repository import Gtk, Gdk
 from gi.repository import WebKit2
 
 class MainWindow(Gtk.Window):
@@ -48,6 +48,7 @@ class MainWindow(Gtk.Window):
         root_box.pack_start(self._setup_webrenderer(), True, True, 0)
 
         # Window Setup
+        self.connect("key-press-event",self._key_press_event)
         self.connect('destroy', Gtk.main_quit)
         self.fullscreen()
         self.show_all()
@@ -93,6 +94,17 @@ class MainWindow(Gtk.Window):
             renderer_container.pack_start(view, True, True, 0)
 
         return renderer_container
+
+    def _key_press_event(self,widget,event) -> bool:
+        ctrl = (event.state == Gdk.ModifierType.CONTROL_MASK)
+        if ctrl and Gdk.keyval_name(event.keyval) == 'Tab':
+            self._load_tab_callback((self.current_renderer_id + 1) % len(self.PAGES))(None)
+            return True
+        if Gdk.keyval_name(event.keyval) == 'F5':
+            self.refresh(None)
+            return True
+        else:
+            return False
 
     def _handle_load_change_callback(self, script: str = "") -> Callable[[WebKit2.WebView, WebKit2.LoadEvent], None]:
         def func(web_view: WebKit2.WebView, load_event: WebKit2.LoadEvent) -> None:
