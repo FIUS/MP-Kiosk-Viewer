@@ -100,8 +100,11 @@ class MainWindow(Gtk.Window):
         if ctrl and Gdk.keyval_name(event.keyval) == 'Tab':
             self._load_tab_callback((self.current_renderer_id + 1) % len(self.PAGES))(None)
             return True
+        if ctrl and Gdk.keyval_name(event.keyval) == 'F5':
+            self.current_renderer.reload_bypass_cache()
+            return True
         if Gdk.keyval_name(event.keyval) == 'F5':
-            self.refresh(None)
+            self.current_renderer.reload()
             return True
         else:
             return False
