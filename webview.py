@@ -13,9 +13,9 @@ class MainWindow(Gtk.Window):
     ELEMENT_PADDING = 4
 
     PAGES = [
-        ("Google", "http://google.com/", ""),
-        ("DuckDuckGo", "http://duckduckgo.com/", ""),
-        ("Yahoo", "http://yahoo.com/", "")
+        ("Google", "http://google.com/", "", None, None),
+        ("DuckDuckGo", "http://duckduckgo.com/", "", None, None),
+        ("Yahoo", "http://yahoo.com/", "", None, None)
     ]
 
     # Load Config
@@ -86,6 +86,7 @@ class MainWindow(Gtk.Window):
 
         for page in MainWindow.PAGES:
             view = WebKit2.WebView()
+            view.connect("authenticate", self._handle_http_auth_callback(page[3], page[4]))
             view.connect("load-changed", self._handle_load_changed)
             view.connect("load-changed", self._handle_load_change_callback(page[2]))
             view.load_uri(page[1])
@@ -94,6 +95,14 @@ class MainWindow(Gtk.Window):
             renderer_container.pack_start(view, True, True, 0)
 
         return renderer_container
+
+    def _handle_http_auth_callback(self, username: str, password: str) -> Callable[[WebKit2.WebView, WebKit2.AuthenticationRequest], bool]:
+        def func(web_view: WebKit2.WebView, auth_req: WebKit2.AuthenticationRequest) -> bool:
+            if username is not None:
+                auth_req.authenticate(WebKit2.Credential(username, password, WebKit2.CredentialPersistence.FOR_SESSION))
+                return True
+            return False
+        return func
 
     def _key_press_event(self,widget,event) -> bool:
         ctrl = (event.state == Gdk.ModifierType.CONTROL_MASK)
