@@ -20,7 +20,7 @@ The config of the software is done in the `config.py` python file. To set the pa
 |    4    | pass | This is the password used to answer a http basic auth requests from the webserver.                                                 |
 
 ### Example
-```
+```python
 PAGES = [
 	("Google", "https://google.com/", "", None, None),
 	("DuckDuckGo", "https://duckduckgo.com/", "", None, None)
