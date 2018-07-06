@@ -105,3 +105,6 @@ venv.bak/
 
 # exclude config file
 config.py
+
+# exclude final executable
+mpkv
