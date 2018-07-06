@@ -105,7 +105,7 @@ class MainWindow(Gtk.Window):
         return func
 
     def _key_press_event(self,widget,event) -> bool:
-        ctrl = (event.state == Gdk.ModifierType.CONTROL_MASK)
+        ctrl = (event.state | Gdk.ModifierType.CONTROL_MASK)
         if ctrl and Gdk.keyval_name(event.keyval) == 'Tab':
             self._load_tab_callback((self.current_renderer_id + 1) % len(self.PAGES))(None)
             return True
