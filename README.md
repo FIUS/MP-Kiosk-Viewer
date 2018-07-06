@@ -30,7 +30,9 @@ PAGES = [
 ## Building a executable
 Building the software is not strictly neccesary it is possible if you want to test your settings or want to work on the system to run the `webview.pf` file with python.
 > `python3 webview.py`
+
 If you want to build it you get one singe executable file which also bakes the configuration to itself so the settings can't be easily changed. The build command is:
 > `make`
+
 After the executable is made you can either use it as is anywhere on a system where `python3` is installed or you can install it into `~/.local/bin` with:
 > `make install`
