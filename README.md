@@ -3,9 +3,10 @@ A small multi page kiosk browser. Written in python3 with the help of GTK and We
 
 ## Requirements
 - python3
-- make
-- zip
+- make¹
+- zip¹
 
+_¹ build dependency which is not needed for execution_<br>
 _(If you have make already installed you can quickly install the rest by executing `'sudo make requirements'`)_
 
 ## Configuration
