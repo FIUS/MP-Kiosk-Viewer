@@ -18,6 +18,7 @@ config.py:
 	touch config.py
 
 requirements:
+	apt-get update
 	apt-get install zip python3
 
 install: $(OUTPUTFILE)
