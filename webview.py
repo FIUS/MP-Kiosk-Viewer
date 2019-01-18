@@ -89,6 +89,11 @@ class MainWindow(Gtk.Window):
             view.connect("authenticate", self._handle_http_auth_callback(page[3], page[4]))
             view.connect("load-changed", self._handle_load_changed)
             view.connect("load-changed", self._handle_load_change_callback(page[2]))
+            view.connect("permission-request", self._handle_permission_request)
+            view.get_settings().set_enable_media_stream(True)
+            view.get_settings().set_enable_mediasource(True)
+            view.get_settings().set_enable_webaudio(True)
+            view.get_settings().set_enable_write_console_messages_to_stdout(True)
             view.load_uri(page[1])
 
             self.renderer.append(view)
@@ -133,6 +138,10 @@ class MainWindow(Gtk.Window):
         if load_event is WebKit2.LoadEvent.FINISHED:
             self.loading_bar.hide()
             self._button_update()
+
+    def _handle_permission_request(self, web_view: WebKit2.WebView, request: WebKit2.PermissionRequest) -> bool:
+        request.allow()
+        return True
 
     def _load_tab_callback(self, id) -> Callable[[Gtk.Button], None]:
         def func(button: Gtk.Button) -> None:
