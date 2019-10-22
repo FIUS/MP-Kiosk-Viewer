@@ -111,8 +111,12 @@ class MainWindow(Gtk.Window):
 
     def _key_press_event(self,widget,event) -> bool:
         ctrl = (event.state & Gdk.ModifierType.CONTROL_MASK)
+        shift = (event.state & Gdk.ModifierType.SHIFT_MASK)
         if ctrl and Gdk.keyval_name(event.keyval) == 'Tab':
             self._load_tab_callback((self.current_renderer_id + 1) % len(self.PAGES))(None)
+            return True
+        if ctrl and Gdk.keyval_name(event.keyval) == 'Iso_left_tab':
+            self._load_tab_callback((self.current_renderer_id - 1) % len(self.PAGES))(None)
             return True
         if ctrl and Gdk.keyval_name(event.keyval) == 'F5':
             self.current_renderer.reload_bypass_cache()
