@@ -112,7 +112,7 @@ class MainWindow(Gtk.Window):
         ctrl = (event.state & Gdk.ModifierType.CONTROL_MASK)
         shift = (event.state & Gdk.ModifierType.SHIFT_MASK)
         if ctrl and Gdk.keyval_name(event.keyval) == 'Tab':
-            #self._load_tab_callback((self.current_renderer_id + 1) % len(self.PAGES))(None)
+            self._load_tab_callback((self.current_renderer_id + 1) % len(self.PAGES))(None)
             return True
         if Gdk.keyval_name(event.keyval) == 'ISO_Left_Tab': #ISO_Left_Tab =  shift + tab
             self._load_tab_callback((self.current_renderer_id - 1) % len(self.PAGES))(None)
