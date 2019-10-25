@@ -7,7 +7,7 @@ A small multi page kiosk browser. Written in python3 with the help of GTK and We
 - zip¹
 
 _¹ build dependency which is not needed for execution_<br>
-_(If you have make already installed you can quickly install the rest by executing `'sudo make requirements'`)_
+_(If you have make already installed on an debian based distro you can quickly install the rest by executing `'sudo make requirements'`)_
 
 ## Configuration
 The config of the software is done in the `config.py` python file. To set the pages of the mpkv add a `PAGES` array to the config file and fill it with 5 entry touples. The Elements of the touples are structured as follows:
@@ -29,7 +29,7 @@ PAGES = [
 ```
 
 ## Building a executable
-Building the software is not strictly neccesary it is possible if you want to test your settings or want to work on the system to run the `webview.pf` file with python.
+Building the software is not strictly neccesary it is possible if you want to test your settings or want to work on the system to run the `webview.py` file with python.
 > `python3 webview.py`
 
 If you want to build it you get one singe executable file which also bakes the configuration to itself so the settings can't be easily changed. The build command is:
