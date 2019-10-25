@@ -98,7 +98,6 @@ class MainWindow(Gtk.Window):
 
             self.renderer.append(view)
             renderer_container.pack_start(view, True, True, 0)
-
         return renderer_container
 
     def _handle_http_auth_callback(self, username: str, password: str) -> Callable[[WebKit2.WebView, WebKit2.AuthenticationRequest], bool]:
@@ -113,6 +112,9 @@ class MainWindow(Gtk.Window):
         ctrl = (event.state & Gdk.ModifierType.CONTROL_MASK)
         if ctrl and Gdk.keyval_name(event.keyval) == 'Tab':
             self._load_tab_callback((self.current_renderer_id + 1) % len(self.PAGES))(None)
+            return True
+        if Gdk.keyval_name(event.keyval) == 'ISO_Left_Tab': #ISO_Left_Tab =  shift + tab
+            self._load_tab_callback((self.current_renderer_id - 1) % len(self.PAGES))(None)
             return True
         if ctrl and Gdk.keyval_name(event.keyval) == 'F5':
             self.current_renderer.reload_bypass_cache()

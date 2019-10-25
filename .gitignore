@@ -108,3 +108,6 @@ config.py
 
 # exclude final executable
 mpkv
+
+# exclude vscode folder
+.vscode
