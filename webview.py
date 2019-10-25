@@ -116,6 +116,13 @@ class MainWindow(Gtk.Window):
         if Gdk.keyval_name(event.keyval) == 'ISO_Left_Tab': #ISO_Left_Tab =  shift + tab
             self._load_tab_callback((self.current_renderer_id - 1) % len(self.PAGES))(None)
             return True
+        if ctrl and self.test_is_int(Gdk.keyval_name(event.keyval)):
+            next_id =int(Gdk.keyval_name(event.keyval))-1
+            if next_id == -1:
+                next_id = 9
+            if next_id >= 0 and next_id < len(self.PAGES):
+                self._load_tab_callback(next_id )(None)
+            return True
         if ctrl and Gdk.keyval_name(event.keyval) == 'F5':
             self.current_renderer.reload_bypass_cache()
             return True
@@ -177,6 +184,12 @@ class MainWindow(Gtk.Window):
     def go_forward(self, button: Gtk.Button) -> None:
         self.current_renderer.go_forward()
 
+    def test_is_int(self, string) -> bool:
+        try:
+            int(string)
+            return True
+        except ValueError:
+            return False
 
 if __name__ == "__main__":
     t = MainWindow()
